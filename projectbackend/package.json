@@ -1,0 +1,15 @@
+{
+  "name": "projectbackend",
+  "version": "1.0.0",
+  "description": "A complete guide behind the project implementation ! ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon start"
+  },
+  "author": "sarvesh raut",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
