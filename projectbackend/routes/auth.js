@@ -1,19 +1,20 @@
 const express = require('express')
 const Router = express.Router();
-const {singup , singout ,singin} = require("../controllers/auth") ;
+const {signup , signout ,signin , isSignedin} = require("../controllers/auth") ;
 const {check , validationResult} = require('express-validator');
-Router.post("/singup" ,[
+Router.post("/signup" ,[
 check("name").isLength({min:3})
-.withMessage('name lemth gtrther than 3'),
+.withMessage('name lemth should gtrther than 2'),
 check("email").isEmail().withMessage('enter valid email'),
 check("password").isLength({min:5}).withMessage('min passward length is 5')
-], singup) ;
+], signup) ;
 
-Router.post("/singin" ,[
+Router.post("/signin" ,[
     check("email").isEmail().withMessage('email is required'),
     check("password").isLength({min:1}).withMessage('min passward length is 5')
-    ], singin) ;
+    ], 
+signin) ;
 
-Router.get("/singout" , singout)
+Router.get("/signout" , signout) ;
 
 module.exports = Router  ;
