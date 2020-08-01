@@ -20,3 +20,21 @@ exports.getUser = (req, res) => {
   req.profile.encry_password = undefined;
   return res.json(req.profile);
 };
+
+exports.updateUser = (req , res) =>{
+    User.findByIdAndUpdate(
+        {_id :req.profile._id},
+        {$set:req.body}, //this tells which field has to modifies
+        {new:true , useFindAndModify:false},
+        (err , user)=>{
+            if(err || !user){
+               return res.status(400).json({
+                    error:"You are not auth to make changes"
+                });
+            };
+            user.salt = undefined;
+            user.encry_password = undefined;
+         res.json(user);
+        }
+        )
+}

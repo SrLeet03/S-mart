@@ -70,12 +70,16 @@ exports.signout = (req, res) => {
 };
 
 //protected routes
+
+//user should be siged in to pass following middleware
 exports.isSignedIn = expressJwt({
   secret: process.env.SECRET,
   userProperty: "auth"
 });
 
 //custom middlewares
+
+//user should be able to do stuff with only his account 
 exports.isAuthenticated = (req, res, next) => {
   let checker = req.profile && req.auth&& req.profile._id == req.auth._id;
   
