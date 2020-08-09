@@ -51,3 +51,38 @@ exports.userPurchaseList = (req,res) =>{
            return res.json(order)
   })
 } ;
+//this is just for the update of users purchase list
+exports.pushOrderInPurchaseList =  (req , res , next) =>{
+  let purchases = []
+  req.body.order.products.array.forEach(product => { //traversing the loop
+    purchases.push({
+      _id:product._id ,
+      name:product.name,
+      description : product.description ,
+      quantity: product.quantity,
+      amount:product.amount,
+      category:product.category,
+      transaction_id:product.transaction_id
+    });
+  });
+
+//connection of above with the database !
+
+User.findOneAndUpdate(
+  {_id:req.profile._id},
+  {$push :{purchases:purchases}}, //what we want to update ..not set cauz this is an array
+  {next:true} , //every time return updated obj
+  (err , purchase) =>{
+    if(err){
+      return res.status(400).json({
+        error:"Unable to save purchase list"
+      }) ;
+    }
+      next();
+
+    }
+
+);
+
+};
+
